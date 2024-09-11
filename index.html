@@ -12,10 +12,10 @@
         <h1>Hello</h1>
         <div class="carre"></div>
     </section>
+                <!-- Conteneur des pixels -->
+                <div class="pixel-madness"></div>
     <!-- Section 2 -->
     <section class="section2">
-            <!-- Conteneur des pixels -->
-            <div class="pixel-madness"></div>
         <p>World!</p>
         <div class="carre"></div>
     </section>
@@ -29,9 +29,15 @@
         var section2 = document.querySelector(".section2"); // La section 2
         var pixel = []; // Tableau des pixels
         var interval;  // Intervalles pour l'animation
+        let H_Ecran = window.innerHeight; // La grandeur de la fenêtre
+        let W_Ecran = window.innerWidth; // La largeur de la fenêtre
+        let taillePixels = 100 * 100; // La taille des pixels
+        
+        // Calcul du nombre de pixel par rapport à la taille de l'écran de l'utilisateur
+        var numPixels = Math.floor((W_Ecran * H_Ecran) / taillePixels);
 
         // Création de 10 000 pixels
-        for (var i = 0; i < 500; i++) 
+        for (var i = 0; i < numPixels; i++) 
         {
             // Création d'un élément pixel
             var pixel = document.createElement('div');
@@ -67,7 +73,7 @@
                     pixels = pixels.filter((_, index) => index !== randomIndex);
                 }
             // intervalle de 1ms
-            }, 1);
+            }, 5);
         }
 
         // Écoute le scroll de la page
