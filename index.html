@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Section 1 -->
+    <section>
+        <h1>Hello</h1>
+        <div class="carre"></div>
+    </section>
+    <!-- Section 2 -->
+    <section class="section2">
+            <!-- Conteneur des pixels -->
+            <div class="pixel-madness"></div>
+        <p>World!</p>
+        <div class="carre"></div>
+    </section>
+
+</body>
+    <script>
+        // On attend que la page soit chargée
+        window.onload = function() {
+        // Variables
+        var container = document.querySelector('.pixel-madness'); // Le conteneur des pixels
+        var section2 = document.querySelector(".section2"); // La section 2
+        var pixel = []; // Tableau des pixels
+        var interval;  // Intervalles pour l'animation
+
+        // Création de 10 000 pixels
+        for (var i = 0; i < 500; i++) 
+        {
+            // Création d'un élément pixel
+            var pixel = document.createElement('div');
+            // Ajout de la classe "pixel"
+            pixel.className = 'pixel';
+            // Ajout de l,élément dans le conteneur
+            container.appendChild(pixel);
+        }
+
+        // Fonction pour démarrer l'animation
+        function startPixelAnimation() {
+            // Sélectionne tous les pixels et les met dans un tableau
+            pixels = Array.from(document.querySelectorAll('.pixel'));
+            
+            // On donne une intervalle pour changer l'opacité des pixels 
+            interval = setInterval(function() {
+                // Si le tableau est vide, on arrête l'animation
+                if (pixels.length === 0) 
+                {
+                    clearInterval(interval);
+                // Sinon...
+                } 
+                else 
+                {
+                    // On prend un pixel au hasard dans le tableau
+                    var randomIndex = Math.floor(Math.random() * pixels.length);
+                    // On change l'opacité du pixel pour 0
+                    pixels[randomIndex].style.opacity = '0';
+                    // 1- On crée un nouveau tableau sans le pixel sélectionné
+                    // 2- Teste le résultat de filter(), si le pixel est différent de celui sélectionné --> (_, index), il est ajouté au nouveau tableau
+                    // 3- Si le pixel est égal à celui sélectionné, il est retiré du tableau, sinon il est ajouté
+                    // 4- Le tableau pixels est mis à jour
+                    pixels = pixels.filter((_, index) => index !== randomIndex);
+                }
+            // intervalle de 1ms
+            }, 1);
+        }
+
+        // Écoute le scroll de la page
+        window.addEventListener('scroll', function() {
+            if (section2) 
+            {
+                var section2Top = section2.getBoundingClientRect().top;
+                // Si la section 2 est visible
+                if (section2Top <= window.innerHeight) 
+                {
+                    // On démarre l'animation
+                    startPixelAnimation();
+                    // On retire l'écouteur d'événement
+                    window.removeEventListener('scroll', arguments.callee);
+                }
+            }
+        });
+    };
+    </script>
+</html>
